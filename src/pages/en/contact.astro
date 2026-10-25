@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Contact ${SITE_NAMES[lang]}: mistakes, rules, embedding`} description="Write to Examen Civique Blanc when an answer looks wrong, when a rule or a fee seems out of date, or to embed the French civic exam mock test on a charity or training website." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Every message is read by a person.</p>
+    <h2>An answer looks wrong</h2>
+    <p>Give us the first words of the question. Each explanation names the text it comes from; if the text has changed, we rewrite the question.</p>
+    <h2>A rule or fee looks out of date</h2>
+    <p>Tell us the rule and, if you have it, the official text that says otherwise. We re-read the source, fix the parameter file and date the change.</p>
+    <h2>What we cannot do</h2>
+    <p>We are not a préfecture or an exam centre. We cannot book you a session, follow a file or advise on a personal case. Do not send a permit number, a file number or an identity document.</p>
+    <h2>Embedding the mock test</h2>
+    <p>Charities, community centres and trainers can show the mock test in a frame, free of charge: see the <a href={route('widget', lang)}>embedding page</a>.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>Updated: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

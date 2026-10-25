@@ -1,0 +1,17 @@
+---
+/** Attributions exigées par les licences (RECETTE, règle commune 3 de l'audit données-droits du 2026-10-24).
+ * Affichée en pied de toutes les pages, embeds compris. */
+interface Props { lang: 'en' | 'fr'; class?: string }
+const { lang, class: cls = 'text-xs text-navy-500' } = Astro.props;
+const LO = 'https://www.etalab.gouv.fr/licence-ouverte-open-licence/';
+const FC = 'https://formation-civique.interieur.gouv.fr/';
+---
+{lang === 'fr' ? (
+  <p class={cls} data-licence-notice>
+    Intitulés des questions de connaissance : ministère de l’Intérieur, <a class="underline" href={FC} target="_blank" rel="noopener">formation-civique.interieur.gouv.fr</a>, réutilisés sous <a class="underline" href={LO} target="_blank" rel="noopener">Licence Ouverte 2.0</a>. Propositions de réponse, corrigés, mises en situation et calculs : Radif Partners. Textes de loi : Légifrance.
+  </p>
+) : (
+  <p class={cls} data-licence-notice>
+    Knowledge question stems: French Interior Ministry, <a class="underline" href={FC} target="_blank" rel="noopener">formation-civique.interieur.gouv.fr</a>, reused under the <a class="underline" href={LO} target="_blank" rel="noopener">Licence Ouverte 2.0</a> (Open Licence), translated by Radif Partners. Answer options, explanations, scenarios and calculators: Radif Partners. Legal texts: Légifrance.
+  </p>
+)}

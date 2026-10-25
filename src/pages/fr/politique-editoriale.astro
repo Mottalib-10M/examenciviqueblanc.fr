@@ -1,0 +1,19 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'fr';
+---
+<PageLayout title={`Politique éditoriale : ${SITE_NAMES[lang]}, sources et corrections`} description="Sur quels textes officiels s’appuie Examen Civique Blanc, comment ses réponses et mises en situation sont rédigées, quelles sources il refuse et comment une erreur est corrigée et datée." lang={lang} noindex={true} breadcrumbs={[{ label: 'Politique éditoriale' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Politique éditoriale et de correction</h1>
+    <p>Ces pages servent à préparer un examen payant et à choisir la date d’un dépôt de dossier. Une réponse fausse ou une durée périmée peut coûter un échec ou un refus : chaque règle renvoie donc au texte officiel où elle a été lue.</p>
+    <h2>Responsable</h2><p>{AUTHOR_NAME}, joignable à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Ce que nous lisons</h2><p>L’arrêté du 10 octobre 2025 et les autres textes publiés sur Légifrance, les fiches de service-public.gouv.fr sur l’examen civique, la naturalisation, la nationalité par mariage et les cartes de séjour, les listes et fiches thématiques de formation-civique.interieur.gouv.fr, et les pages des deux organismes habilités à faire passer l’examen.</p>
+    <h2>Rédaction des réponses</h2><p>Les intitulés officiels sont repris tels quels. Les propositions de réponse, les corrigés et les mises en situation sont écrits par nous, à partir d’un fait vérifiable, avec la référence du texte. Nous ne copions jamais une question d’une application, d’un livre, d’un autre site ou d’une session réelle.</p>
+    <h2>Sources refusées</h2><p>Forums, sites de préparation, organismes de formation et sites de dépôt de dossier ne fournissent ici aucun chiffre. Une règle introuvable dans un texte officiel n’est pas publiée.</p>
+    <h2>Révision</h2><p>Les règles et les tarifs sont relus à la main ; chaque page affiche la date de la dernière relecture. Aucune mise à jour automatique n’est faite.</p>
+    <h2>Corrections</h2><ol><li>Nous relisons le texte officiel.</li><li>Nous corrigeons le paramètre ou la question et ajoutons un test.</li><li>Le site est reconstruit et affiche la nouvelle date.</li></ol>
+    <h2>Indépendance</h2><p>Aucun organisme de formation, centre d’examen, cabinet ni administration ne paie ni ne relit ce qui est publié ici, et le site ne contient aucun lien d’affiliation. Voir aussi la <a href={route('method', lang)}>méthode</a>. Version : {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

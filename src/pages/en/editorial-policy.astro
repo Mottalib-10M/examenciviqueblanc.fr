@@ -1,0 +1,19 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy of ${SITE_NAMES[lang]}: sources and fixes`} description="Which official texts Examen Civique Blanc relies on, how its answer options and scenario questions are written, which sources it refuses and how a mistake is corrected and dated." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial and corrections policy</h1>
+    <p>People use these pages to prepare for a paid exam and to choose when to file an application. A wrong answer or an outdated period can cost a failed exam or a refusal, so every rule points back to the official text it was read in.</p>
+    <h2>Who is responsible</h2><p>{AUTHOR_NAME}, reachable at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>What we read</h2><p>The order of 10 October 2025 and the other texts on Légifrance, the service-public.gouv.fr pages on the civic exam, naturalisation, nationality through marriage and residence permits, the lists and guidance sheets of formation-civique.interieur.gouv.fr, and the pages of the two bodies authorised to run the exam.</p>
+    <h2>How answers are written</h2><p>Official stems are reused as published and translated for the English version. Answer options, explanations and scenarios are written by us from a verifiable fact, with the reference of the text. We never copy a question from an app, a book, another site or a real session.</p>
+    <h2>Sources we refuse</h2><p>Forums, prep sites, training companies and application services provide no figure here. A rule that cannot be found in an official text is not published.</p>
+    <h2>Review</h2><p>Rules and fees are re-read by hand; every page shows the date of the last check. There is no automatic update.</p>
+    <h2>Corrections</h2><ol><li>We re-read the official text.</li><li>We fix the parameter or the question and add a test.</li><li>The site is rebuilt and shows the new date.</li></ol>
+    <h2>Independence</h2><p>No training company, exam centre, law firm or administration pays for or reviews what is published here, and the site has no affiliate links. See also the <a href={route('method', lang)}>method</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

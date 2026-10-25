@@ -1,0 +1,29 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { helpers } from '../../lib/helpers';
+const lang = 'fr';
+const h = helpers(lang);
+---
+<PageLayout title="Examen Civique Blanc : qui écrit questions et corrigés" description="Qui publie Examen Civique Blanc, d’où viennent les questions de l’examen civique et leurs corrigés, où sont lues les règles, ce que le site ne vend pas." lang={lang} jsonLd={[organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'À propos', path: route('about', lang) }])]} breadcrumbs={[{ label: 'À propos' }]}>
+  <header class="mb-6"><p class="kicker">À propos</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Qui publie Examen Civique Blanc</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Examen Civique Blanc est publié par Radif Partners, une société qui construit des outils gratuits à partir de textes et de données publics. Il s’adresse aux étrangers installés en France qui doivent passer l’examen civique pour une carte de séjour pluriannuelle, une carte de résident ou la naturalisation, et à ceux qui les accompagnent : associations, formateurs, bénévoles.</p>
+    <h2>Ce que fait le site</h2>
+    <p>Il propose un examen blanc de {h.size} questions, tiré selon la répartition de l’arrêté du 10 octobre 2025, chronométré à {h.P.exam.minutes} minutes et noté au seuil de {h.need} bonnes réponses ; un entraînement par thématique avec correction immédiate ; la liste des questions officielles avec leurs réponses expliquées. Il calcule aussi la date à partir de laquelle on peut demander la naturalisation, la nationalité par mariage ou la carte de résident, dit quel examen et quel niveau de français s’appliquent à chaque titre, et additionne le coût de la démarche.</p>
+    <p>Tout est gratuit, sans compte et sans e-mail, et rien de ce que vous saisissez ne quitte votre navigateur.</p>
+    <h2>D’où viennent les questions</h2>
+    <p>Les {h.num(h.count.knowledge)} intitulés de connaissance reprennent les listes publiées par le ministère de l’Intérieur sur formation-civique.interieur.gouv.fr, réutilisables sous Licence Ouverte 2.0 avec mention de la source. Le ministère ne publie ni les propositions de réponse ni les mises en situation : les quatre propositions de chaque question, les corrigés et les {h.count.situations} mises en situation sont écrits par nous, à partir des fiches thématiques du ministère et des textes de Légifrance. Aucune question n’est reprise d’un site ou d’une application privée.</p>
+    <h2>Ce que nous ne sommes pas</h2>
+    <p>Nous ne sommes ni le ministère de l’Intérieur, ni une préfecture, ni un centre d’examen, ni un avocat. Nous n’inscrivons à aucune session, ne recevons aucun dossier, ne délivrons aucune attestation, et nos réponses ne sont pas la formulation officielle. Le site n’utilise ni Marianne, ni logo officiel.</p>
+    <h2>Comment le site est financé</h2>
+    <p>Le site ne vend ni formation, ni livre, ni application, ni aide au dépôt de dossier, ne touche aucune commission et ne renvoie vers aucune entreprise qui le ferait. Si de la publicité est ajoutée un jour, elle ne sera jamais placée au-dessus d’un examen.</p>
+    <h2>Signaler une erreur</h2>
+    <p>Écrivez à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> en citant les premiers mots de la question ou la règle en cause. La <a href={route('editorial', lang)}>politique éditoriale</a> explique comment une correction est faite, et la <a href={route('method', lang)}>page Méthode</a> détaille le tirage et les calculs.</p>
+    <p class="text-sm text-navy-600">Règles et tarifs vérifiés le <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'fr-FR')}</time>.</p>
+  </div>
+</PageLayout>

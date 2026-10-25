@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route } from '../../i18n/routes';
+import { breadcrumbSchema, articleSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+const lang = 'en';
+const h = helpers(lang);
+const P = h.P;
+---
+<PageLayout title="Examen Civique Blanc method: exam draw, marking, dates" description="How Examen Civique Blanc draws a French civic mock exam under the order of 10 October 2025, marks it at 32 and works out naturalisation and resident card dates." lang={lang} jsonLd={[articleSchema({ title: 'Method: exam draw, marking and date calculations', description: 'Method of Examen Civique Blanc', path: route('method', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Method', path: route('method', lang) }])]} breadcrumbs={[{ label: 'Method' }]}>
+  <header class="mb-6"><p class="kicker">Method</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Exam draw, marking and date calculations</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <p>Every page and every tool reads the same files: one question bank and one parameter file holding the official rules and fees, read on {h.date(P.retrieved_at)}. No pass mark, fee or period is typed into a page: when a rule changes, the file changes and every page follows.</p>
+    <h2>1. The question bank</h2>
+    <p>It holds {h.num(h.count.all)} questions: {h.num(h.count.knowledge)} knowledge questions whose stems come from the official lists ({h.count.csp} for the multi-year permit, {h.count.cr} for the resident card, many shared by both), and {h.count.situations} scenario questions written by us. Each question has four options, one correct, an explanation and the reference of the text to check. The position of the correct answer is spread at random, equally across the four places. The English version is our translation; the real exam is in French only.</p>
+    <p>Questions about people in office today name nobody: an answer that depends on an election or an appointment would go out of date without warning.</p>
+    <h2>2. Drawing the mock exam</h2>
+    <p>Article 3 of the order of 10 October 2025 sets, theme by theme, how many questions each notion gets. The mock exam applies that grid: {h.quota(1).total} questions on the principles and values of the Republic, {h.quota(2).total} on institutions, {h.quota(3).total} on rights and duties, {h.quota(4).total} on history, geography and culture, {h.quota(5).total} on daily life in France. At the multi-year permit or resident card level it draws from the matching official list; at naturalisation level it favours the stems the ministry also uses there. The draw depends on a number (the seed) kept in the page address: the same address gives back the same exam.</p>
+    <h2>3. Marking</h2>
+    <p>A correct answer scores one point, a wrong or blank one zero, and the exam is passed at {h.need} out of {h.size}, as the order provides. The {P.exam.minutes}-minute timer starts with the first answer and ends the paper at zero. In practice mode the site shows an indicative pass at {h.pc(P.exam.passPercent / 100)} of the set.</p>
+    <h2>4. Date calculations</h2>
+    <p>The filing date adds to the start date the period the application requires: {P.naturalisation.residenceYears} years of residence for naturalisation as a rule, {P.naturalisation.reducedYears} with a reduction, {P.marriage.years} years of marriage for nationality through marriage ({P.marriage.yearsIfNotResident} without {P.marriage.residenceSinceMarriageYears} years living in France since the marriage), {P.residentCard.spouseYears} years for the resident card of a French citizen's spouse. For naturalisation the date cannot fall before the applicant's {P.naturalisation.fileFromAge}th birthday. For the EU long-term card the tool tests the absence rule day by day: at most {P.residentCard.ldueMaxConsecutiveMonths} months in a row and {P.residentCard.ldueMaxTotalMonths} months in total over {P.residentCard.ldueYears} years, an absence running from the day after departure to the day before return. Other conditions (valid permit, income, integration, criminal record) are not assessed: the date only says when the period is met.</p>
+    <h2>5. Costs</h2>
+    <p>Only amounts set by a text are filled in: the {h.eur(h.natFee)} tax stamp for naturalisation and nationality through marriage, {h.eur(h.titleFee)} for a first permit, {h.eur(P.fees.visaRegularisation)} for the regularisation visa. The civic exam and the French test have no national price, so you type in the price you find at your centre.</p>
+    <h2>6. Updates</h2>
+    <p>The rules are re-read by hand on Légifrance and service-public.gouv.fr; the date of the last check is at the foot of every page. There is no automatic update: if a text changes between two checks, tell us through the <a href={route('contact', lang)}>Contact page</a>.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,20 @@
+{
+ "accent": "#1E3A8A",
+ "symbol": "QCM",
+ "variants": [
+  {
+   "file": "og-fr.png",
+   "title": "Examen civique 2026\nexamen blanc gratuit",
+   "subtitle": "40 questions · 45 minutes · 32 bonnes réponses · corrigé expliqué",
+   "badge": "Site indépendant · intitulés sous Licence Ouverte · corrigés Radif Partners",
+   "brand": "Examen Civique Blanc"
+  },
+  {
+   "file": "og-en.png",
+   "title": "French civic exam 2026\nfree mock test",
+   "subtitle": "40 questions · 45 minutes · pass mark 32 · every answer explained",
+   "badge": "Independent site · stems under Licence Ouverte · answers by Radif Partners",
+   "brand": "Examen Civique Blanc"
+  }
+ ]
+}

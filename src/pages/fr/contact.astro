@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'fr';
+---
+<PageLayout title={`Contact : ${SITE_NAMES[lang]}, erreurs, règles, intégration`} description="Écrire à Examen Civique Blanc quand une réponse semble fausse, quand une règle ou un tarif paraît périmé, ou pour intégrer l’examen civique blanc sur le site d’une association." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>E-mail : <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Chaque message est lu par une personne.</p>
+    <h2>Une réponse semble fausse</h2>
+    <p>Donnez les premiers mots de la question. Chaque corrigé cite le texte dont il vient ; si le texte a changé, nous réécrivons la question.</p>
+    <h2>Une règle ou un tarif semble périmé</h2>
+    <p>Indiquez la règle et, si vous l’avez, le texte officiel qui dit autre chose. Nous relisons la source, corrigeons le fichier de paramètres et datons la modification.</p>
+    <h2>Ce que nous ne pouvons pas faire</h2>
+    <p>Nous ne sommes ni une préfecture ni un centre d’examen. Nous ne pouvons ni vous inscrire, ni suivre un dossier, ni conseiller sur un cas personnel. N’envoyez ni numéro de titre de séjour, ni numéro de dossier, ni pièce d’identité.</p>
+    <h2>Intégrer l’examen blanc</h2>
+    <p>Les associations, centres sociaux et formateurs peuvent afficher l’examen blanc dans un cadre, gratuitement : voir la <a href={route('widget', lang)}>page d’intégration</a>.</p>
+    <h2>Éditeur</h2>
+    <LegalIdentity lang={lang} />
+    <p>Mise à jour : {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,392 @@
+{
+  "_lisezmoi": "Tous les paramètres du site vivent ici, jamais en dur (RECETTE §4). Chaque valeur a été relue le 2026-10-25 sur la source citée (Légifrance, service-public.gouv.fr, formation-civique.interieur.gouv.fr, lefrancaisdesaffaires.fr). Mise à jour manuelle : scripts/update-data.py signale les pages officielles qui ont changé.",
+  "year": 2026,
+  "retrieved_at": "2026-10-25",
+  "valid_from": "2026-01-01",
+  "valid_to": "2026-12-31",
+  "exam": {
+    "since": "2026-01-01",
+    "questions": 40,
+    "options": 4,
+    "knowledge": 28,
+    "situations": 12,
+    "minutes": 45,
+    "passCorrect": 32,
+    "passPercent": 80,
+    "fraudBanYears": 2,
+    "validity": "illimitée",
+    "exemptAgeOver": 65,
+    "quotas": [
+      {
+        "theme": 1,
+        "total": 11,
+        "notions": {
+          "symboles": 3,
+          "laicite": 2,
+          "situation": 6
+        }
+      },
+      {
+        "theme": 2,
+        "total": 6,
+        "notions": {
+          "democratie": 3,
+          "organisation": 2,
+          "europe": 1
+        }
+      },
+      {
+        "theme": 3,
+        "total": 11,
+        "notions": {
+          "droits": 2,
+          "devoirs": 3,
+          "situation": 6
+        }
+      },
+      {
+        "theme": 4,
+        "total": 8,
+        "notions": {
+          "histoire": 3,
+          "geographie": 3,
+          "patrimoine": 2
+        }
+      },
+      {
+        "theme": 5,
+        "total": 4,
+        "notions": {
+          "installer": 1,
+          "soins": 1,
+          "travail": 1,
+          "ecole": 1
+        }
+      }
+    ],
+    "themes": {
+      "fr": [
+        "Principes et valeurs de la République",
+        "Système institutionnel et politique",
+        "Droits et devoirs",
+        "Histoire, géographie et culture",
+        "Vivre dans la société française"
+      ],
+      "en": [
+        "Principles and values of the Republic",
+        "Institutions and politics",
+        "Rights and duties",
+        "History, geography and culture",
+        "Living in French society"
+      ]
+    },
+    "organisers": [
+      "Chambre de commerce et d'industrie de Paris Île-de-France (Le français des affaires)",
+      "France Éducation international"
+    ],
+    "priceRule": "fixé par chaque centre de passation",
+    "appealDays": 30,
+    "civicTrainingHours": 24,
+    "civicTrainingDays": 4,
+    "resultHoursMin": 24,
+    "resultHoursMax": 48,
+    "attestationKeptYears": 10
+  },
+  "language": {
+    "csp": "A2",
+    "cr": "B1",
+    "nat": "B2",
+    "marriage": "B2",
+    "attestationValidityYears": 2,
+    "natExemptRefugeeAge": 70,
+    "natExemptRefugeeYears": 15
+  },
+  "naturalisation": {
+    "minAge": 18,
+    "fileFromAge": 17,
+    "residenceYears": 5,
+    "reducedYears": 2,
+    "fee": 255,
+    "feeGuyane": 127.5,
+    "decisionMonths": 18,
+    "decisionMonthsLongResident": 12,
+    "longResidentYears": 10,
+    "extensionMonths": 3,
+    "prisonMonthsBar": 6,
+    "withdrawalYears": 2,
+    "appealMonths": 2,
+    "appealSilenceMonths": 4,
+    "ceremonyMonths": 6
+  },
+  "marriage": {
+    "years": 4,
+    "yearsIfNotResident": 5,
+    "residenceSinceMarriageYears": 3,
+    "fee": 255
+  },
+  "residentCard": {
+    "validityYears": 10,
+    "spouseYears": 3,
+    "spouseYearsTunisia": 1,
+    "familyReunionYears": 3,
+    "parentYears": 3,
+    "ldueYears": 5,
+    "ldueMaxConsecutiveMonths": 6,
+    "ldueMaxTotalMonths": 10,
+    "lossAbroadYears": 3
+  },
+  "fees": {
+    "titleTimbre": 50,
+    "titleTax": 300,
+    "titleTotal": 350,
+    "visaRegularisation": 300,
+    "visaRegularisationAtFiling": 100
+  },
+  "csp": {
+    "validityMinYears": 2,
+    "validityMaxYears": 4
+  },
+  "sources": {
+    "arrete_exam": {
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000052381620",
+      "label": {
+        "fr": "Légifrance : arrêté du 10 octobre 2025 relatif au programme, aux épreuves et aux modalités d'organisation de l'examen civique",
+        "en": "Légifrance: order of 10 October 2025 on the programme, papers and organisation of the civic exam"
+      }
+    },
+    "fc_info": {
+      "url": "https://formation-civique.interieur.gouv.fr/examen-civique/informations-g%C3%A9n%C3%A9rales-sur-lexamen-civique/",
+      "label": {
+        "fr": "Ministère de l'Intérieur, formation civique : informations générales sur l'examen civique",
+        "en": "Interior Ministry, formation civique: general information on the civic exam"
+      }
+    },
+    "fc_csp": {
+      "url": "https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-csp/",
+      "label": {
+        "fr": "Ministère de l'Intérieur : liste officielle des questions de connaissance, mention carte de séjour pluriannuelle",
+        "en": "Interior Ministry: official list of knowledge questions, multi-year permit level"
+      }
+    },
+    "fc_cr": {
+      "url": "https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-cr/",
+      "label": {
+        "fr": "Ministère de l'Intérieur : liste officielle des questions de connaissance, mention carte de résident",
+        "en": "Interior Ministry: official list of knowledge questions, resident card level"
+      }
+    },
+    "fc_fiches": {
+      "url": "https://formation-civique.interieur.gouv.fr/fiches-par-thematiques/",
+      "label": {
+        "fr": "Ministère de l'Intérieur : fiches de la formation civique par thématique",
+        "en": "Interior Ministry: formation civique revision sheets by theme"
+      }
+    },
+    "sp_exam_sejour": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F39530",
+      "label": {
+        "fr": "Service-public.gouv.fr : carte de séjour pluriannuelle et carte de résident, comment passer l'examen civique (vérifié le 10 février 2026)",
+        "en": "Service-public.gouv.fr: multi-year permit and resident card, taking the civic exam (checked 10 February 2026)"
+      }
+    },
+    "sp_exam_nat": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F39426",
+      "label": {
+        "fr": "Service-public.gouv.fr : naturalisation française, comment passer l'examen civique (vérifié le 16 juillet 2026)",
+        "en": "Service-public.gouv.fr: French naturalisation, taking the civic exam (checked 16 July 2026)"
+      }
+    },
+    "sp_actu": {
+      "url": "https://www.service-public.gouv.fr/particuliers/actualites/A18713",
+      "label": {
+        "fr": "Service-public.gouv.fr : un nouvel examen civique pour les étrangers souhaitant s'installer en France (18 décembre 2025)",
+        "en": "Service-public.gouv.fr: a new civic exam for foreigners settling in France (18 December 2025)"
+      }
+    },
+    "sp_nat": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2213",
+      "label": {
+        "fr": "Service-public.gouv.fr : naturalisation française par décret (vérifié le 16 juillet 2026)",
+        "en": "Service-public.gouv.fr: French naturalisation by decree (checked 16 July 2026)"
+      }
+    },
+    "sp_langue": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F11926",
+      "label": {
+        "fr": "Service-public.gouv.fr : nationalité française, comment justifier de son niveau en français (vérifié le 1er janvier 2026)",
+        "en": "Service-public.gouv.fr: French nationality, proving your level of French (checked 1 January 2026)"
+      }
+    },
+    "sp_timbre": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F32952",
+      "label": {
+        "fr": "Service-public.gouv.fr : acheter un timbre fiscal pour une demande de nationalité française (vérifié le 1er mai 2026)",
+        "en": "Service-public.gouv.fr: buying the tax stamp for a nationality application (checked 1 May 2026)"
+      }
+    },
+    "sp_mariage": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2726",
+      "label": {
+        "fr": "Service-public.gouv.fr : déclaration de nationalité française par mariage (vérifié le 1er mai 2026)",
+        "en": "Service-public.gouv.fr: French nationality by declaration after marriage (checked 1 May 2026)"
+      }
+    },
+    "sp_cr": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2208",
+      "label": {
+        "fr": "Service-public.gouv.fr : carte de résident de 10 ans d'un étranger en France (vérifié le 1er juillet 2026)",
+        "en": "Service-public.gouv.fr: 10-year resident card (checked 1 July 2026)"
+      }
+    },
+    "sp_ldue": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17359",
+      "label": {
+        "fr": "Service-public.gouv.fr : carte de résident de longue durée-UE (vérifié le 1er juin 2026)",
+        "en": "Service-public.gouv.fr: EU long-term resident card (checked 1 June 2026)"
+      }
+    },
+    "sp_vpf": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2209",
+      "label": {
+        "fr": "Service-public.gouv.fr : carte de séjour vie privée et familiale (vérifié le 1er mai 2026)",
+        "en": "Service-public.gouv.fr: private and family life residence permit (checked 1 May 2026)"
+      }
+    },
+    "decret_nat": {
+      "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000051900519/2026-01-02",
+      "label": {
+        "fr": "Légifrance : décret n° 2025-648 du 15 juillet 2025 modifiant le décret n° 93-1362 du 30 décembre 1993",
+        "en": "Légifrance: decree no. 2025-648 of 15 July 2025 amending decree no. 93-1362 of 30 December 1993"
+      }
+    },
+    "code_civil_nat": {
+      "url": "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070721/LEGISCTA000006165459",
+      "label": {
+        "fr": "Légifrance : code civil, articles 21-14-1 à 21-25-1 (acquisition de la nationalité par décision de l'autorité publique)",
+        "en": "Légifrance: Civil Code, articles 21-14-1 to 21-25-1 (nationality by decision of the public authority)"
+      }
+    },
+    "arrete_dispense": {
+      "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000053227374",
+      "label": {
+        "fr": "Légifrance : arrêté du 30 décembre 2025 fixant les modalités de dispense des justificatifs de français et d'examen civique (nationalité)",
+        "en": "Légifrance: order of 30 December 2025 on exemptions from the French-language and civic exam proofs (nationality)"
+      }
+    },
+    "arrete_langue": {
+      "url": "https://www.legifrance.gouv.fr/eli/arrete/2025/12/22/INTV2536139A/jo/texte",
+      "label": {
+        "fr": "Légifrance : arrêté du 22 décembre 2025 relatif à la justification de la maîtrise du français (cartes de séjour pluriannuelle et de résident)",
+        "en": "Légifrance: order of 22 December 2025 on proof of French for multi-year permits and resident cards"
+      }
+    },
+    "arrete_livret": {
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054426889",
+      "label": {
+        "fr": "Légifrance : arrêté du 3 juillet 2026 portant approbation du livret du citoyen (JORF du 16 juillet 2026)",
+        "en": "Légifrance: order of 3 July 2026 approving the livret du citoyen (Official Journal of 16 July 2026)"
+      }
+    },
+    "referentiel": {
+      "url": "https://www.legifrance.gouv.fr/loda/id/LEGISCTA000052382278",
+      "label": {
+        "fr": "Légifrance : référentiel de l'examen civique (annexe I de l'arrêté du 10 octobre 2025)",
+        "en": "Légifrance: civic exam syllabus (annex I to the order of 10 October 2025)"
+      }
+    },
+    "charte": {
+      "url": "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000025263486",
+      "label": {
+        "fr": "Légifrance : charte des droits et devoirs du citoyen français (décret n° 2012-127)",
+        "en": "Légifrance: charter of the rights and duties of the French citizen (decree no. 2012-127)"
+      }
+    },
+    "ccip_exam": {
+      "url": "https://www.lefrancaisdesaffaires.fr/candidat/examen-civique/presentation/",
+      "label": {
+        "fr": "CCI Paris Île-de-France, organisme agréé : présentation de l'examen civique",
+        "en": "Paris Île-de-France Chamber of Commerce, approved body: civic exam overview"
+      }
+    },
+    "ccip_inscription": {
+      "url": "https://www.lefrancaisdesaffaires.fr/candidat/examen-civique/inscription/",
+      "label": {
+        "fr": "CCI Paris Île-de-France : inscription à l'examen civique (droits d'inscription fixés par le centre)",
+        "en": "Paris Île-de-France Chamber of Commerce: booking the civic exam (fee set by each centre)"
+      }
+    },
+    "ccip_resultats": {
+      "url": "https://www.lefrancaisdesaffaires.fr/candidat/examen-civique/resultats/",
+      "label": {
+        "fr": "CCI Paris Île-de-France : comprendre ses résultats à l'examen civique",
+        "en": "Paris Île-de-France Chamber of Commerce: understanding your civic exam result"
+      }
+    },
+    "fei_centres": {
+      "url": "https://www.france-education-international.fr/centres-d-examen/carte?type-centre=examen_civique",
+      "label": {
+        "fr": "France Éducation international, organisme agréé : carte des centres d'examen civique",
+        "en": "France Éducation international, approved body: map of civic exam centres"
+      }
+    },
+    "licence_ouverte": {
+      "url": "https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
+      "label": {
+        "fr": "Etalab : Licence Ouverte / Open Licence 2.0",
+        "en": "Etalab: Licence Ouverte / Open Licence 2.0"
+      }
+    },
+    "sp_ceremonie": {
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F15868",
+      "label": {
+        "fr": "Service-public.gouv.fr : la cérémonie d’accueil dans la citoyenneté française (F15868)",
+        "en": "Service-public.gouv.fr: the welcome ceremony into French citizenship (F15868)"
+      }
+    },
+    "code_civil_ceremonie": {
+      "url": "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070721/LEGISCTA000006165461",
+      "label": {
+        "fr": "Légifrance : code civil, articles 21-28 et 21-29 (cérémonie d’accueil)",
+        "en": "Légifrance: Civil Code, articles 21-28 and 21-29 (welcome ceremony)"
+      }
+    },
+    "insee_acquisitions": {
+      "url": "https://www.insee.fr/fr/statistiques/2381644",
+      "label": {
+        "fr": "Insee : acquisitions de la nationalité française, données annuelles (sources : ministères de l’Intérieur et de la Justice)",
+        "en": "Insee: acquisitions of French nationality, annual data (sources: Interior and Justice ministries)"
+      }
+    },
+    "ccip_attestation": {
+      "url": "https://www.lefrancaisdesaffaires.fr/candidat/examen-civique/attestation/",
+      "label": {
+        "fr": "CCI Paris Île-de-France : obtenir son attestation d’examen civique",
+        "en": "Paris Île-de-France Chamber of Commerce: getting your civic exam certificate"
+      }
+    }
+  },
+  "stats": {
+    "year": 2025,
+    "published": "2026-07-09",
+    "total": 98139,
+    "decree": 42246,
+    "naturalisation": 42063,
+    "reintegration": 183,
+    "declaration": 53912,
+    "marriage": 17579,
+    "prev": [
+      {
+        "year": 2023,
+        "total": 97288,
+        "decree": 40064,
+        "marriage": 19455
+      },
+      {
+        "year": 2024,
+        "total": 103661,
+        "decree": 48829,
+        "marriage": 15910
+      }
+    ]
+  }
+}

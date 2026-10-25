@@ -1,0 +1,29 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { helpers } from '../../lib/helpers';
+const lang = 'en';
+const h = helpers(lang);
+---
+<PageLayout title="Examen Civique Blanc: who writes the civic exam questions" description="Who publishes Examen Civique Blanc, where its French civic exam questions and explanations come from, where the rules are read, and what the site never sells." lang={lang} jsonLd={[organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path: route('about', lang) }])]} breadcrumbs={[{ label: 'About' }]}>
+  <header class="mb-6"><p class="kicker">About</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Who publishes Examen Civique Blanc</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Examen Civique Blanc is published by Radif Partners, a company that builds free tools from public texts and data. It is written for foreign nationals living in France who must pass the civic exam for a multi-year residence permit, a resident card or naturalisation, and for the people who help them: charities, trainers, volunteers. This English version is for expatriates who want to understand the rules before practising in French.</p>
+    <h2>What the site does</h2>
+    <p>It offers a {h.size}-question mock exam drawn with the mix set by the order of 10 October 2025, timed at {h.P.exam.minutes} minutes and marked at {h.need} correct answers; practice by theme with instant answers; and the official question lists with explained answers. It also works out when you can apply for naturalisation, nationality through marriage or a resident card, says which exam and French level apply to each permit, and adds up the cost.</p>
+    <p>Everything is free, with no account and no email, and nothing you type leaves your browser.</p>
+    <h2>Where the questions come from</h2>
+    <p>The {h.num(h.count.knowledge)} knowledge question stems come from the lists published by the French Interior Ministry on formation-civique.interieur.gouv.fr, reusable under the Licence Ouverte 2.0 with attribution, and are translated by us here. The ministry publishes neither answer options nor scenario questions: the four options of each question, the explanations and the {h.count.situations} scenarios are ours, written from the ministry guidance sheets and the texts on Légifrance. No question is taken from a private site or app.</p>
+    <h2>What we are not</h2>
+    <p>We are not the Interior Ministry, a préfecture, an exam centre or a lawyer. We book no session, take no application, issue no certificate, and our answers are not the official wording. The site uses no Marianne and no official logo.</p>
+    <h2>How the site is funded</h2>
+    <p>The site sells no course, book, app or application service, takes no commission and sends you to no company that does. If advertising is ever added, it will never sit above an exam.</p>
+    <h2>Report a mistake</h2>
+    <p>Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> quoting the first words of the question or the rule concerned. The <a href={route('editorial', lang)}>editorial policy</a> explains how corrections are made, and the <a href={route('method', lang)}>Method page</a> details the draw and the calculations.</p>
+    <p class="text-sm text-navy-600">Rules and fees checked on <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'en-GB')}</time>.</p>
+  </div>
+</PageLayout>

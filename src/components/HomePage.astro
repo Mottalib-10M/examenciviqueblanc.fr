@@ -1,0 +1,162 @@
+---
+/**
+ * Accueil d'une langue : l'examen blanc de 40 questions (premier écran), les trois démarches côte à
+ * côte (mention, niveau de français, timbre), la date de dépôt et le coût, puis toutes les pages par
+ * rubrique. Chaque chiffre est lu dans params-2026.json ou dans la banque.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Tool from './Tool.astro';
+import Clamp from './Clamp.astro';
+import Sources from './Sources.astro';
+import { route, type Locale } from '../i18n/routes';
+import { PAGES } from '../lib/guides';
+import { groupLabel, GROUPS_ORDER } from '../i18n/nav';
+import { helpers } from '../lib/helpers';
+import { LAST_UPDATED, AUTHOR_NAME } from '../data/site-config';
+import { displayDate } from '../lib/format';
+import { faqSchema, webApplicationSchema, websiteSchema, organizationSchema } from '../lib/seo';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const h = helpers(lang, true);
+const P = h.P;
+const a = h.a;
+const cards = (g: (typeof GROUPS_ORDER)[number]) => PAGES.filter((p) => p.group === g).map((p) => ({ href: route(p.id, lang), name: p[lang].nav, text: p[lang].card }));
+
+const title = fr ? 'Examen civique 2026 : examen blanc gratuit et QCM corrigé' : 'Civic Exam France 2026: Free Mock Test and Practice Quiz';
+const description = fr
+  ? `Examen civique 2026 gratuit : examen blanc de ${h.size} questions en ${P.exam.minutes} minutes, noté au seuil de ${h.need}, questions officielles corrigées, date de naturalisation et coût.`
+  : `Civic exam France 2026, free: a ${h.size}-question mock test in ${P.exam.minutes} minutes marked at ${h.need}, official questions with explained answers, naturalisation dates and costs.`;
+const faqs = fr ? [
+  { q: 'Qu’est-ce que l’examen civique ?', a: `C’est un questionnaire de ${h.size} questions à choix multiples, en français, qui vérifie la connaissance des principes de la République, des institutions, des droits et devoirs, de l’histoire et de la vie en France. Il dure ${P.exam.minutes} minutes et se réussit avec ${h.need} bonnes réponses. Depuis le ${h.date(P.exam.since)}, son attestation est exigée pour une première carte pluriannuelle, une première carte de résident et la naturalisation.` },
+  { q: 'Qui doit passer l’examen civique ?', a: `Les étrangers qui demandent pour la première fois une carte de séjour pluriannuelle ou une carte de résident, et tous les candidats à la naturalisation. Ne sont pas concernés les renouvellements, les personnes de plus de ${P.exam.exemptAgeOver} ans pour un titre de séjour, la déclaration de nationalité par mariage et certains titres de protection. Un handicap ou un état de santé attesté ouvre droit à des aménagements ou à une dispense.` },
+  { q: 'Où trouver les questions officielles de l’examen civique ?', a: `Le ministère de l’Intérieur publie sur formation-civique.interieur.gouv.fr la liste des questions de connaissance pour la carte pluriannuelle et pour la carte de résident, sans les réponses. Notre banque reprend ces ${h.num(h.count.knowledge)} intitulés sous Licence Ouverte et y ajoute quatre propositions, la bonne réponse, un corrigé et ${h.count.situations} mises en situation que nous avons rédigées.` },
+  { q: 'Combien coûte l’examen civique ?', a: 'Il n’existe pas de tarif national : chaque centre de passation agréé fixe son prix, qui varie d’un centre à l’autre. Comparez les prix affichés à l’inscription auprès des deux organismes habilités. La préparation, elle, peut être entièrement gratuite : les listes officielles, les fiches thématiques du ministère et l’examen blanc de ce site ne demandent ni compte ni paiement.' },
+  { q: 'Que faire en cas d’échec à l’examen civique ?', a: `Vous pouvez vous réinscrire à une nouvelle session : aucun délai d’attente n’est imposé entre deux passages, mais chaque passage se paie. Regardez votre résultat par thématique, retravaillez les notions faibles en mode entraînement et refaites des examens blancs jusqu’à dépasser ${h.need} avec une marge. Le résultat peut être contesté dans les ${P.exam.appealDays} jours auprès de l’organisme.` },
+  { q: 'L’attestation de l’examen civique a-t-elle une date d’expiration ?', a: `Non. L’attestation de réussite n’a pas de limite de durée : une fois l’examen réussi, elle peut être produite pour les demandes suivantes de même niveau. L’attestation obtenue pour la carte de résident vaut aussi pour une carte de séjour pluriannuelle. Conservez l’original et une copie numérique, car la préfecture la demande au dépôt du dossier, comme le justificatif de niveau de français.` },
+  { q: 'Où se passe l’examen civique ?', a: 'Sur ordinateur, dans un centre agréé par l’un des deux organismes habilités : la CCI Paris Île-de-France, avec Le français des affaires, et France Éducation international. Il existe des centres dans toute la France et, selon les organismes, à l’étranger dans des instituts français ou des alliances françaises. L’inscription se fait directement auprès du centre choisi, qui fixe ses dates et son prix.' },
+] : [
+  { q: 'What is the French civic exam?', a: `A ${h.size}-question multiple-choice test, in French, on the principles of the Republic, institutions, rights and duties, history and daily life in France. It lasts ${P.exam.minutes} minutes and you pass with ${h.need} correct answers. Since ${h.date(P.exam.since)} its certificate is required for a first multi-year residence permit, a first resident card and naturalisation.` },
+  { q: 'Who has to take the civic exam?', a: `Foreign nationals applying for their first multi-year residence permit or first resident card, and every naturalisation applicant. Renewals, people over ${P.exam.exemptAgeOver} applying for a residence permit, the nationality declaration by marriage and some protection permits are outside it. A certified disability or health condition can lead to adjustments or an exemption.` },
+  { q: 'Can I take the French civic exam in English?', a: 'No. The decree of 10 October 2025 sets the exam in French only. This English version exists to help expatriates understand the notions and the rules; once you know them, practise on the French version of the mock test, since that is the language of the questions, the options and the scenarios on the day.' },
+  { q: 'How much does the civic exam cost?', a: 'There is no national price: each approved test centre sets its own, and prices vary from one centre to another. Compare the prices shown when you book with the two authorised bodies. Preparing can be entirely free: the official lists, the ministry guidance sheets and the mock test on this site need no account and no payment.' },
+  { q: 'What if I fail the civic exam?', a: `Book another session: no waiting period is imposed between sittings, though each sitting is paid. Look at your score by theme, work on the weak notions in practice mode and take more mock tests until you clear ${h.need} with a margin. The result can be challenged with the organiser within ${P.exam.appealDays} days.` },
+  { q: 'Does the civic exam certificate expire?', a: 'No. The pass certificate has no time limit: once you pass, you can use it for later applications at the same level. A certificate obtained for the resident card also counts for a multi-year residence permit. Keep the original and a scanned copy, because the préfecture asks for it when you file, along with the proof of your French level.' },
+  { q: 'Where do I sit the civic exam?', a: 'On a computer, in a centre approved by one of the two authorised bodies: the Paris Île-de-France Chamber of Commerce, through Le français des affaires, and France Éducation international. There are centres across France and, depending on the body, abroad in French institutes or Alliances françaises. You book directly with the centre you choose, which sets its own dates and price.' },
+];
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webApplicationSchema({ name: fr ? 'Examen civique blanc' : 'French civic exam mock test', description, path: route('home', lang), lang }), faqSchema(faqs, lang)];
+const resume = fr
+  ? `L’examen civique est obligatoire depuis le ${h.date(P.exam.since)} pour les étrangers qui demandent une première carte de séjour pluriannuelle, une première carte de résident ou la naturalisation. C’est un questionnaire de ${h.size} questions à choix multiples, en français, à traiter en ${P.exam.minutes} minutes : chaque question a ${P.exam.options} propositions dont une seule est juste, et il faut ${h.need} bonnes réponses, soit ${h.pc(P.exam.passPercent / 100)}, pour obtenir l’attestation. L’épreuve mêle ${P.exam.knowledge} questions de connaissance et ${P.exam.situations} mises en situation sur cinq thématiques : principes et valeurs de la République, institutions, droits et devoirs, histoire et géographie, vie dans la société française. Une mention correspond à chaque démarche, et le niveau de français exigé monte avec elle : ${P.language.csp} pour la carte pluriannuelle, ${P.language.cr} pour la carte de résident, ${P.language.nat} pour la naturalisation. L’examen blanc ci-dessus tire ${h.size} questions de notre banque de ${h.num(h.count.all)}, qui reprend les ${h.num(h.count.knowledge)} intitulés officiels avec des réponses expliquées, selon la répartition exacte de l’arrêté du 10 octobre 2025.`
+  : `The civic exam (examen civique) has been compulsory since ${h.date(P.exam.since)} for foreign nationals applying for a first multi-year residence permit, a first resident card or French naturalisation. It is a multiple-choice test of ${h.size} questions, in French, to be answered in ${P.exam.minutes} minutes: each question has ${P.exam.options} options and one correct answer, and you need ${h.need} correct answers, ${h.pc(P.exam.passPercent / 100)}, to get the certificate. The paper mixes ${P.exam.knowledge} knowledge questions and ${P.exam.situations} scenario questions over five themes: the principles and values of the Republic, institutions, rights and duties, history and geography, and daily life in France. Each application has its own level, and the French language level required rises with it: ${P.language.csp} for the multi-year permit, ${P.language.cr} for the resident card, ${P.language.nat} for naturalisation. The mock test above draws ${h.size} questions from our bank of ${h.num(h.count.all)}, which holds the ${h.num(h.count.knowledge)} official question stems with explained answers, using the exact mix of the decree of 10 October 2025. Questions appear in English to help you learn; the real exam is in French only.`;
+const routes3 = fr ? [
+  { name: 'Carte de séjour pluriannuelle', mention: 'Mention carte pluriannuelle', level: P.language.csp, fee: h.eur(h.titleFee), when: 'Première demande', link: 'examen-csp' },
+  { name: 'Carte de résident', mention: 'Mention carte de résident', level: P.language.cr, fee: h.eur(h.titleFee), when: `Après ${P.residentCard.spouseYears} à ${P.residentCard.ldueYears} ans selon le motif`, link: 'examen-carte-resident' },
+  { name: 'Naturalisation', mention: 'Mention naturalisation', level: P.language.nat, fee: h.eur(h.natFee), when: `Après ${P.naturalisation.residenceYears} ans de résidence, en règle générale`, link: 'examen-naturalisation' },
+] : [
+  { name: 'Multi-year residence permit', mention: 'Multi-year permit level', level: P.language.csp, fee: h.eur(h.titleFee), when: 'First application', link: 'examen-csp' },
+  { name: 'Resident card', mention: 'Resident card level', level: P.language.cr, fee: h.eur(h.titleFee), when: `After ${P.residentCard.spouseYears} to ${P.residentCard.ldueYears} years depending on the ground`, link: 'examen-carte-resident' },
+  { name: 'Naturalisation', mention: 'Naturalisation level', level: P.language.nat, fee: h.eur(h.natFee), when: `After ${P.naturalisation.residenceYears} years of residence, as a rule`, link: 'examen-naturalisation' },
+];
+const L3 = fr ? { exam: 'Examen civique', level: 'Français', fee: 'Timbres', when: 'Quand', go: 'Examen blanc de cette mention' } : { exam: 'Civic exam', level: 'French', fee: 'Stamps', when: 'When', go: 'Mock test at this level' };
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={jsonLd} faqs={faqs} breadcrumbs={[]}>
+  <header class="mb-3">
+    <h1 class="mt-0 text-[1.75rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{fr ? 'Examen civique : examen blanc gratuit de 40 questions corrigées' : 'French civic exam: free 40-question mock test with answers'}</h1>
+    <p class="mt-2 text-base text-navy-700 sm:text-lg">{fr ? `${h.size} questions, ${P.exam.minutes} minutes, ${h.need} bonnes réponses pour réussir. Sans compte ni e-mail.` : `${h.size} questions, ${P.exam.minutes} minutes, ${h.need} correct answers to pass. No account, no email.`}</p>
+    <p data-chrome data-independant class="mt-1 text-xs text-navy-600">{fr ? 'Site indépendant, sans lien avec le ministère de l’Intérieur, les préfectures ni les centres d’examen.' : 'Independent site, not linked to the French Interior Ministry, the préfectures or the exam centres.'}</p>
+  </header>
+  <div data-outil class="mb-4"><Tool tool={{ kind: 'quiz', props: { mention: 'cr', mode: 'exam', mentionSelect: true } }} lang={lang} primary={true} seedKey="home" /></div>
+  <Clamp text={resume} id="clamp-home" lang={lang} class="mb-3" />
+  <p class="mb-8 text-sm text-navy-600">{fr ? 'Mis à jour le' : 'Updated'} <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, fr ? 'fr-FR' : 'en-GB')}</time> · {AUTHOR_NAME} · <a href={route('method', lang)} class="underline hover:text-navy-900">{fr ? 'Méthode' : 'Method'}</a> · <a href={route('about', lang)} class="underline hover:text-navy-900">{fr ? 'À propos' : 'About this site'}</a></p>
+
+  <section class="mb-8" aria-labelledby="trois">
+    <h2 id="trois" class="mb-3 text-2xl font-bold text-navy-900">{fr ? 'Trois démarches, trois mentions' : 'Three applications, three levels'}</h2>
+    <div class="grid gap-4 md:grid-cols-3">
+      {routes3.map((r) => (
+        <div class="rounded-xl border border-navy-200 bg-white p-4">
+          <h3 class="text-lg font-semibold text-navy-900">{r.name}</h3>
+          <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+            <dt class="text-navy-600">{L3.exam}</dt><dd class="text-navy-900">{r.mention}</dd>
+            <dt class="text-navy-600">{L3.level}</dt><dd class="font-semibold text-navy-900">{r.level}</dd>
+            <dt class="text-navy-600">{L3.fee}</dt><dd class="tabular-nums text-navy-900">{r.fee}</dd>
+            <dt class="text-navy-600">{L3.when}</dt><dd class="text-navy-900">{r.when}</dd>
+          </dl>
+          <a href={route(r.link, lang)} class="mt-3 inline-block text-sm font-medium text-accent-700 underline">{L3.go}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {fr ? (
+  <div class="prose prose-slate max-w-none">
+    <h2>Ce qui a changé le 1er janvier 2026</h2>
+    <p>Avant 2026, il n’existait pas d’examen civique commun à toutes les démarches. La loi du 26 janvier 2024 pour contrôler l’immigration et améliorer l’intégration, puis le décret du 15 juillet 2025 et l’arrêté du 10 octobre 2025, ont créé un examen standardisé, passé dans un centre agréé et sanctionné par une attestation. L’attestation n’a pas de date de fin de validité : réussie une fois, elle vaut pour toutes les demandes suivantes de même niveau, et celle de la carte de résident sert aussi pour une carte pluriannuelle.</p>
+    <p>Le niveau de français exigé a lui aussi été relevé : {P.language.csp} pour une première carte pluriannuelle, {P.language.cr} pour la carte de résident, {P.language.nat} pour la naturalisation, à prouver par un diplôme ou un test de moins de {P.language.attestationValidityYears} ans. La page <Fragment set:html={a('niveau-francais', 'niveau de français')} /> détaille les diplômes et tests acceptés, et l’outil <Fragment set:html={a('quel-examen', 'quel examen pour mon titre')} /> répond en trois clics selon votre situation.</p>
+    <h2>Comment se préparer sans payer</h2>
+    <p>Le ministère de l’Intérieur indique lui-même que la préparation peut être entièrement gratuite. Il publie la liste des questions de connaissance pour la carte pluriannuelle et pour la carte de résident, et des fiches thématiques qui donnent les réponses à apprendre. Ce qu’il ne publie pas, ce sont les propositions de réponse ni les mises en situation : c’est ce qui manque pour s’entraîner en conditions réelles, et ce que ce site ajoute, sans compte, sans e-mail et sans version payante.</p>
+    <ol>
+      <li>Une thématique par jour en <Fragment set:html={a('qcm', 'QCM d’entraînement')} />, avec la correction à chaque réponse.</li>
+      <li>Les <Fragment set:html={a('mises-en-situation', 'mises en situation')} /> à part : elles pèsent {P.exam.situations} questions sur {h.size}.</li>
+      <li>Des <Fragment set:html={a('examen-blanc', 'examens blancs complets')} />, correction à la fin, jusqu’à dépasser {h.need} plusieurs fois de suite.</li>
+    </ol>
+    <p>La répartition des questions n’est pas la même d’une thématique à l’autre. Le mini-outil ci-dessous donne, pour chacune, le nombre de questions posées le jour de l’examen et leur détail par notion.</p>
+  </div>
+  ) : (
+  <div class="prose prose-slate max-w-none">
+    <h2>What changed on 1 January 2026</h2>
+    <p>Before 2026 there was no civic exam common to every application. The immigration and integration law of 26 January 2024, then the decree of 15 July 2025 and the order of 10 October 2025, created a standard exam, sat in an approved centre and leading to a certificate. The certificate has no expiry date: once passed, it counts for every later application at the same level, and the resident card certificate also counts for a multi-year permit.</p>
+    <p>The French language level was raised too: {P.language.csp} for a first multi-year permit, {P.language.cr} for the resident card, {P.language.nat} for naturalisation, proven by a diploma or a test less than {P.language.attestationValidityYears} years old. The <Fragment set:html={a('niveau-francais', 'French level page')} /> lists the accepted diplomas and tests, and the <Fragment set:html={a('quel-examen', 'which exam for my permit')} /> tool answers in three clicks for your situation.</p>
+    <h2>How to prepare without paying</h2>
+    <p>The French Interior Ministry itself says that preparing can be entirely free. It publishes the list of knowledge questions for the multi-year permit and for the resident card, and guidance sheets with the answers to learn. What it does not publish is the answer options or the scenario questions: that is what you need to practise in real conditions, and what this site adds, with no account, no email and no paid version.</p>
+    <ol>
+      <li>One theme a day in <Fragment set:html={a('qcm', 'practice mode')} />, with the answer explained after each question.</li>
+      <li>The <Fragment set:html={a('mises-en-situation', 'scenario questions')} /> on their own: they make up {P.exam.situations} of the {h.size} questions.</li>
+      <li>Full <Fragment set:html={a('examen-blanc', 'mock tests')} />, marked at the end, until you clear {h.need} several times in a row.</li>
+    </ol>
+    <p>The number of questions differs from one theme to another. The small tool below gives, for each theme, how many questions are asked on the day and how they split by notion.</p>
+  </div>
+  )}
+  <div class="mb-6"><Tool tool={{ kind: 'mini:quota' }} lang={lang} idPrefix="h1" /></div>
+
+  {fr ? (
+  <div class="prose prose-slate max-w-none">
+    <h2>Avant l’examen : la date de dépôt</h2>
+    <p>L’examen n’est qu’une pièce du dossier. Pour la naturalisation, il faut en règle générale {P.naturalisation.residenceYears} ans de résidence habituelle en France, {P.naturalisation.reducedYears} ans seulement après un diplôme de l’enseignement supérieur français, et aucune durée pour un réfugié. La demande peut être déposée dès {P.naturalisation.fileFromAge} ans. Pour la carte de résident, la durée dépend du motif : {P.residentCard.spouseYears} ans de mariage pour le conjoint de Français, {P.residentCard.ldueYears} ans de séjour pour la carte de longue durée-UE, avec des absences plafonnées. Le mini-outil donne les années qui restent ; la page <Fragment set:html={a('naturalisation', 'naturalisation')} /> calcule la date exacte.</p>
+  </div>
+  ) : (
+  <div class="prose prose-slate max-w-none">
+    <h2>Before the exam: when you can apply</h2>
+    <p>The exam is only one item in the file. For naturalisation you need, as a rule, {P.naturalisation.residenceYears} years of habitual residence in France, only {P.naturalisation.reducedYears} after a French higher-education degree, and none for a refugee. You can file from age {P.naturalisation.fileFromAge}. For the resident card the period depends on the ground: {P.residentCard.spouseYears} years of marriage for the spouse of a French citizen, {P.residentCard.ldueYears} years of stay for the EU long-term card, with capped absences. The small tool gives the years left; the <Fragment set:html={a('naturalisation', 'naturalisation page')} /> works out the exact date.</p>
+  </div>
+  )}
+  <div class="mb-6"><Tool tool={{ kind: 'mini:natyears' }} lang={lang} idPrefix="h2" /></div>
+
+  {fr ? (
+  <div class="prose prose-slate max-w-none">
+    <h2>Le coût réel de la démarche</h2>
+    <p>Deux postes sont fixés par la loi : le timbre fiscal de {h.eur(h.natFee)} pour la naturalisation ({h.eur(P.naturalisation.feeGuyane)} en Guyane), et {h.eur(h.titleFee)} pour une première carte pluriannuelle ou une carte de résident ({h.eur(P.fees.titleTimbre)} de droit de timbre et {h.eur(P.fees.titleTax)} de taxe), auxquels s’ajoute un visa de régularisation de {h.eur(P.fees.visaRegularisation)} si vous êtes entré sans visa de long séjour. L’examen civique et le test de français n’ont pas de prix national. Le <Fragment set:html={a('cout-naturalisation', 'calcul du coût')} /> additionne le tout avec les prix que vous relevez.</p>
+    <h2>Toutes les pages</h2>
+  </div>
+  ) : (
+  <div class="prose prose-slate max-w-none">
+    <h2>The real cost of applying</h2>
+    <p>Two items are set by law: the {h.eur(h.natFee)} tax stamp for naturalisation ({h.eur(P.naturalisation.feeGuyane)} in French Guiana), and {h.eur(h.titleFee)} for a first multi-year permit or resident card ({h.eur(P.fees.titleTimbre)} stamp duty and {h.eur(P.fees.titleTax)} tax), plus a {h.eur(P.fees.visaRegularisation)} regularisation visa fee if you entered without a long-stay visa. The civic exam and the French test have no national price. The <Fragment set:html={a('cout-naturalisation', 'cost calculator')} /> adds everything up with the prices you find.</p>
+    <h2>Every page</h2>
+  </div>
+  )}
+  <div class="not-prose grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-sommaire>
+    {GROUPS_ORDER.map((g) => (
+      <section><h3 class="mb-2 text-lg font-semibold text-navy-900">{groupLabel(g, lang)}</h3><ul class="space-y-2 text-sm">{cards(g).map((c) => <li><a href={c.href} class="font-medium text-accent-700 underline">{c.name}</a><span class="block text-navy-700">{c.text}</span></li>)}</ul></section>
+    ))}
+  </div>
+  <div class="prose prose-slate mt-8 max-w-none">
+    {fr ? (
+      <><h2>Qui rédige ce site</h2>
+      <p>Examen Civique Blanc est publié par {AUTHOR_NAME}. Les intitulés des questions de connaissance viennent des listes officielles du ministère de l’Intérieur, réutilisées sous Licence Ouverte ; les propositions, les corrigés et les mises en situation sont les nôtres, écrits à partir des fiches du ministère et des textes de Légifrance, et chaque corrigé indique où vérifier. Les règles de séjour et de nationalité sont relues sur service-public.gouv.fr. La <a href={route('method', lang)}>page Méthode</a> explique le tirage, la notation et les calculs de date.</p></>
+    ) : (
+      <><h2>Who writes this site</h2>
+      <p>Examen Civique Blanc is published by {AUTHOR_NAME}. The knowledge question stems come from the French Interior Ministry's official lists, reused under the Licence Ouverte; the options, explanations and scenarios are ours, written from the ministry guidance sheets and the texts on Légifrance, and each explanation says where to check. Residence and nationality rules are read on service-public.gouv.fr. The <a href={route('method', lang)}>Method page</a> explains the draw, the marking and the date calculations.</p></>
+    )}
+    <Sources lang={lang} keys={['arrete_exam', 'fc_info', 'fc_csp', 'fc_cr', 'sp_exam_sejour', 'sp_exam_nat', 'sp_nat', 'sp_cr', 'sp_langue', 'sp_timbre']} />
+  </div>
+</PageLayout>

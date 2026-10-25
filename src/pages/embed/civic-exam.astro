@@ -1,0 +1,23 @@
+---
+/** Outil intégrable (iframe) : sans navigation, noindex, hors sitemap (astro.config). */
+import '../../styles/global.css';
+import Tool from '../../components/Tool.astro';
+import LicenceNotice from '../../components/LicenceNotice.astro';
+import { SITE_URL, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const url = `${SITE_URL}${route('examen-blanc', 'en')}`;
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>French civic exam mock test (widget)</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={url} />
+  </head>
+  <body class="bg-white p-2 text-navy-900">
+    <Tool tool={{ kind: 'quiz', props: { mention: 'cr', mode: 'exam', mentionSelect: true } }} lang="en" primary={true} seedKey="embed-civic-exam" />
+    <p class="mt-2 text-center text-xs text-navy-600" data-independant>Independent site, not linked to the French Interior Ministry. <a href={url} target="_blank" rel="noopener" class="underline">{SITE_NAMES.en}</a></p>
+    <LicenceNotice lang="en" class="mt-2 text-center text-[11px] text-navy-600" />
+  </body>
+</html>

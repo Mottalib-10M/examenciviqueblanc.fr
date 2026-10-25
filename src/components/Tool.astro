@@ -1,0 +1,49 @@
+---
+/**
+ * Affiche un outil avec les réglages de la page : `quiz` (examen blanc ou entraînement), `bank`
+ * (questions avec réponses), `date` (date de dépôt), `cost` (coût total), `level` (examen et niveau
+ * pour mon titre) ou `mini:<spec>`. Les questions montrées au premier rendu sont tirées ici, au build,
+ * avec une graine issue de l'identifiant de la page (RECETTE §17.5).
+ */
+import CivicQuiz from './calc/CivicQuiz';
+import QuestionBank, { inList } from './calc/QuestionBank';
+import DateTool from './calc/DateTool';
+import CostTool from './calc/CostTool';
+import LevelTool from './calc/LevelTool';
+import DelayTool from './calc/DelayTool';
+import Frise from './ui/Frise';
+import { natSteps, friseLabels } from '../lib/frise-steps';
+import MiniSim from './calc/MiniSim';
+import { route, hasRoute, type Locale } from '../i18n/routes';
+import { getSpec } from '../lib/mini-specs';
+import { QUESTIONS } from '../lib/banks-build';
+import { buildExam, buildPractice, seedOf, type Mention, type Theme } from '../lib/engine/exam';
+import type { ToolDef } from '../lib/guide-types';
+interface Props { tool: ToolDef; lang: Locale; primary?: boolean; idPrefix?: string; seedKey?: string }
+const { tool, lang, primary = false, idPrefix, seedKey = 'home' } = Astro.props;
+const props = (tool.props ?? {}) as Record<string, any>;
+const kind = tool.kind;
+const mention = (props.mention ?? 'nat') as Mention;
+const mode = (props.mode ?? 'exam') as 'exam' | 'practice';
+const theme = props.theme != null ? (Number(props.theme) as Theme) : null;
+const situations = !!props.situations;
+const size = Number(props.size ?? 10);
+const seed = seedOf(`${seedKey}-${kind}-${mention}-${theme ?? ''}-${situations ? 's' : ''}`);
+const initial = kind === 'quiz' ? (mode === 'practice' ? buildPractice(QUESTIONS, mention, theme, seed, size, situations ? 'situation' : 'all') : buildExam(QUESTIONS, mention, seed).questions) : [];
+const list = (props.list ?? 'cr') as 'csp' | 'cr' | 'nat' | 'situation';
+const bankTheme = (theme ?? (list === 'situation' ? 1 : 1)) as Theme;
+const bankInitial = kind === 'bank' ? QUESTIONS.filter((q) => inList(q, list) && q.theme === bankTheme) : [];
+const mini = kind.startsWith('mini:') ? kind.slice(5) : null;
+const spec = mini ? getSpec(mini, lang) : null;
+const href = spec?.ctaPage && hasRoute(spec.ctaPage, lang) ? route(spec.ctaPage, lang) : undefined;
+const numDefaults: Record<string, number> = {};
+for (const [k, v] of Object.entries(props)) if (typeof v === 'number') numDefaults[k] = v;
+---
+{kind === 'quiz' && <CivicQuiz client:load lang={lang} mention={mention} mode={mode} theme={theme} situations={situations} initial={initial} seed={seed} mentionSelect={!!props.mentionSelect} idPrefix={idPrefix ?? 'q'} size={size} />}
+{kind === 'bank' && <QuestionBank client:load lang={lang} list={list} theme={bankTheme} initial={bankInitial} idPrefix={idPrefix ?? 'b'} />}
+{kind === 'date' && <DateTool client:load lang={lang} route={props.route ?? 'nat5'} routes={props.routes ? String(props.routes).split(',') as any : undefined} idPrefix={idPrefix ?? 'd'} />}
+{kind === 'cost' && <CostTool client:load lang={lang} procedure={props.procedure ?? 'nat'} idPrefix={idPrefix ?? 'c'} />}
+{kind === 'level' && <LevelTool client:load lang={lang} title={props.title ?? 'csp'} idPrefix={idPrefix ?? 'l'} />}
+{kind === 'frise' && <Frise client:visible steps={natSteps(lang)} labels={friseLabels(lang)} locale={lang === 'fr' ? 'fr-FR' : 'en-GB'} defaultStart="2026-02-02" id={`frise-${idPrefix ?? 'p'}`} />}
+{kind === 'delay' && <DelayTool client:load lang={lang} idPrefix={idPrefix ?? 'y'} />}
+{mini && <MiniSim client:load kind={mini} lang={lang} href={href} defaults={numDefaults} primary={primary} idPrefix={idPrefix ?? (primary ? 'p' : 'm')} />}

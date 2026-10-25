@@ -1,0 +1,21 @@
+{
+ "name": "Examen Civique Blanc",
+ "short_name": "Examen Civique Blanc",
+ "description": "Examen civique blanc gratuit : 40 questions en 45 minutes, seuil de 32, questions officielles CSP et CR, corrigé expliqué, sans compte ni e-mail.",
+ "start_url": "/fr/",
+ "display": "standalone",
+ "background_color": "#ffffff",
+ "theme_color": "#1E3A8A",
+ "icons": [
+  {
+   "src": "/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

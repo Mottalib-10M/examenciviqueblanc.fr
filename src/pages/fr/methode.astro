@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route } from '../../i18n/routes';
+import { breadcrumbSchema, articleSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+const lang = 'fr';
+const h = helpers(lang);
+const P = h.P;
+---
+<PageLayout title="Méthode d’Examen Civique Blanc : tirage, notation et dates" description="Comment Examen Civique Blanc tire un examen civique blanc selon l’arrêté du 10 octobre 2025, le note au seuil de 32 et calcule les dates de naturalisation." lang={lang} jsonLd={[articleSchema({ title: 'Méthode : tirage, notation et calculs de date', description: 'Méthode d’Examen Civique Blanc', path: route('method', lang), lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'Méthode', path: route('method', lang) }])]} breadcrumbs={[{ label: 'Méthode' }]}>
+  <header class="mb-6"><p class="kicker">Méthode</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Tirage, notation et calculs de date</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <p>Toutes les pages et tous les outils lisent les mêmes fichiers : une banque de questions et un fichier de paramètres où figurent les règles et les tarifs officiels, relus le {h.date(P.retrieved_at)}. Aucun seuil, aucun tarif, aucune durée n’est tapé dans une page : quand une règle change, le fichier change et toutes les pages suivent.</p>
+    <h2>1. La banque de questions</h2>
+    <p>Elle compte {h.num(h.count.all)} questions : {h.num(h.count.knowledge)} questions de connaissance dont les intitulés viennent des listes officielles ({h.count.csp} pour la carte pluriannuelle, {h.count.cr} pour la carte de résident, beaucoup étant communes aux deux), et {h.count.situations} mises en situation écrites par nous. Chaque question a quatre propositions, une seule juste, un corrigé et la référence du texte où vérifier. La position de la bonne réponse est répartie au hasard, à parts égales entre les quatre places.</p>
+    <p>Les questions sur des personnes en fonction aujourd’hui ne nomment personne : une réponse qui dépendrait d’une élection ou d’une nomination vieillirait sans prévenir.</p>
+    <h2>2. Le tirage de l’examen blanc</h2>
+    <p>L’article 3 de l’arrêté du 10 octobre 2025 fixe, thématique par thématique, le nombre de questions par notion. L’examen blanc applique cette grille : {h.quota(1).total} questions sur les principes et valeurs de la République, {h.quota(2).total} sur les institutions, {h.quota(3).total} sur les droits et devoirs, {h.quota(4).total} sur l’histoire, la géographie et la culture, {h.quota(5).total} sur la vie dans la société française. Pour la mention carte pluriannuelle ou carte de résident, il puise dans la liste officielle correspondante ; pour la naturalisation, il privilégie les intitulés que le ministère pose aussi à ce niveau. Le tirage dépend d’un nombre (la graine) inscrit dans l’adresse de la page : la même adresse redonne le même examen.</p>
+    <h2>3. La notation</h2>
+    <p>Une bonne réponse vaut un point, une erreur ou une absence de réponse zéro, et l’examen est réussi à {h.need} sur {h.size}, comme le prévoit l’arrêté. Le chronomètre de {P.exam.minutes} minutes démarre à la première réponse et arrête l’épreuve à zéro. En entraînement, le site affiche une réussite indicative à {h.pc(P.exam.passPercent / 100)} de la série.</p>
+    <h2>4. Les calculs de date</h2>
+    <p>La date de dépôt ajoute à la date de départ la durée exigée par la démarche : {P.naturalisation.residenceYears} ans de résidence pour la naturalisation en règle générale, {P.naturalisation.reducedYears} ans en cas de réduction, {P.marriage.years} ans de mariage pour la nationalité par mariage ({P.marriage.yearsIfNotResident} sans {P.marriage.residenceSinceMarriageYears} ans de résidence en France depuis le mariage), {P.residentCard.spouseYears} ans pour la carte de résident du conjoint de Français. Pour la naturalisation, la date ne peut précéder le {P.naturalisation.fileFromAge}e anniversaire. Pour la carte de longue durée-UE, l’outil teste chaque jour la règle des absences : {P.residentCard.ldueMaxConsecutiveMonths} mois consécutifs au plus et {P.residentCard.ldueMaxTotalMonths} mois au total sur les {P.residentCard.ldueYears} ans, une absence se comptant du lendemain du départ à la veille du retour. Les autres conditions (titre valide, ressources, assimilation, casier) ne sont pas évaluées : la date dit seulement quand la durée est atteinte.</p>
+    <h2>5. Les coûts</h2>
+    <p>Seuls les montants fixés par un texte sont préremplis : {h.eur(h.natFee)} de timbre fiscal pour la naturalisation et la nationalité par mariage, {h.eur(h.titleFee)} pour une première carte, {h.eur(P.fees.visaRegularisation)} de visa de régularisation. L’examen civique et le test de français n’ayant pas de prix national, c’est vous qui saisissez le prix relevé dans votre centre.</p>
+    <h2>6. Mise à jour</h2>
+    <p>Les règles sont relues à la main sur Légifrance et service-public.gouv.fr ; la date de la dernière relecture figure en bas de chaque page. Il n’y a pas de mise à jour automatique : si un texte change entre deux relectures, signalez-le par la <a href={route('contact', lang)}>page Contact</a>.</p>
+  </div>
+</PageLayout>
